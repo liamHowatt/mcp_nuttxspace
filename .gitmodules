@@ -1,0 +1,12 @@
+[submodule "nuttx"]
+	path = nuttx
+	url = https://github.com/liamHowatt/nuttx.git
+[submodule "mcp_boards"]
+	path = mcp_boards
+	url = https://github.com/liamHowatt/mcp_boards.git
+[submodule "mcp_apps"]
+	path = mcp_apps
+	url = https://github.com/liamHowatt/mcp_apps.git
+[submodule "apps"]
+	path = apps
+	url = https://github.com/liamHowatt/nuttx-apps.git
