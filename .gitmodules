@@ -10,3 +10,6 @@
 [submodule "apps"]
 	path = apps
 	url = https://github.com/liamHowatt/nuttx-apps.git
+[submodule "qemu"]
+	path = qemu
+	url = https://github.com/espressif/qemu.git
