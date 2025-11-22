@@ -24,6 +24,7 @@ These steps apply for all of the demos in this project.
 
     ```shell
     git clone https://github.com/liamHowatt/mcp_nuttxspace.git
+    cd mcp_nuttxspace
     # the qemu submodule is not needed
     git submodule update --init --recursive nuttx apps mcp_apps mcp_boards
     ```
@@ -206,7 +207,8 @@ cd qemu
 Ensure python3 venv is available (`sudo apt install python3-venv`).
 
 Follow the steps in the official
-[docs for compiling the Espressif fork of qemu](https://github.com/espressif/esp-toolchain-docs/blob/main/qemu/esp32s3/README.md).
+[docs for compiling the Espressif fork of qemu](https://github.com/espressif/esp-toolchain-docs/blob/main/qemu/esp32s3/README.md#compiling-qemu).
+Only do the "Compiling QEMU" section.
 The package `libgcrypt-devel` on Ubuntu is actually `libgcrypt-dev`.
 Don't neglect to install the [general qemu prerequisites](https://wiki.qemu.org/Hosts/Linux).
 Some of the "Recommended additional packages" are needed too. I installed all of them,
