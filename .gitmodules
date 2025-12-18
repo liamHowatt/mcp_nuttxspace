@@ -13,3 +13,6 @@
 [submodule "qemu"]
 	path = qemu
 	url = https://github.com/espressif/qemu.git
+[submodule "mcp_board"]
+	path = mcp_board
+	url = https://github.com/liamHowatt/mcp_board.git
