@@ -346,51 +346,10 @@ Ubuntu 20.04 host where NuttX is running inside an Ubuntu 22.04 or 24.04 Docker 
 The Docker container is only able to open an XOrg window while running `./nuttx` from
 a VS Code terminal which is attached to the container.
 
-1.  Decide where you want Beeper app data to be persisted on your host PC.
-    Open `../apps/mcp_apps/sim_lvgl/sim_lvgl.c` and change the `mount`
-    invocation so that the `fs=` option is the path on your PC you want to use.
-    From now on referred to as the hostfs path.
-
-2.  `/dev/random` is needed for cryptography. I couldn't enable it in the sim, so instead I put
-    a symlink to `/dev/random` in the hostfs path.
-
-    ```
-    cd /your/hostfs/path
-    ln -s /dev/random
-    ```
-
-3. Create a directory called "appdata" which this app will assume the existence of.
-
-    ```
-    cd /your/hostfs/path
-    mkdir appdata
-    ```
-
-4.  Open `../mcp_apps/beeper/beeper_private.h` and comment out the current `#define` of
-    `BEEPER_RANDOM_PATH` and uncomment `#define BEEPER_RANDOM_PATH "/mnt/host/random"`.
-
-5.  Now you need to patch the random path in WolfSSL. You need to run
-    `configure.sh` and `make` first. **You will need to do this next step after
-    every `make distclean` + configure**.
-
-    Load the config and build NuttX once.
+1.  Build and run NuttX.
 
     ```shell
     ./tools/configure.sh -l sim:mcp_sim_lvgl
-    make -j$(nproc) nuttx
-    ```
-
-    Now you can apply a patch to WolfSSL which changes the path to the `random` device
-    it uses.
-
-    ```shell
-    cd ../apps/crypto/wolfssl/wolfssl
-    git apply ../host_random.patch
-    ```
-
-6.  Build NuttX again and run it.
-
-    ```shell
     make -j$(nproc) nuttx
     ./nuttx
     ```
@@ -407,19 +366,19 @@ a VS Code terminal which is attached to the container.
       Current serial number in output stream:  30
     ```
 
-7.  Click "Beeper".
+1.  Click "Beeper".
 
-8.  Log in to your Beeper or Matrix account (not tested with any other Matrix servers
+1.  Log in to your Beeper or Matrix account (not tested with any other Matrix servers
     than Beeper). There's an issue where if you type too fast, keypresses will be missed.
     Beware of this while typing your password which is partially hidden.
 
-    Your username and password will be persisted in a file in your hostfs path at
-    `/your/hostfs/path/appdata/beeper/login` and a directory for the username you signed
-    in with will be created at `/your/hostfs/path/appdata/beeper/your-username`.
+    Your username and password will be persisted in a file in the project root at
+    `appdata/beeper/login` and a directory for the username you signed
+    in with will be created at `appdata/beeper/your-username`.
     You can delete `login` to effectively sign out while preserving the local data
     for that account until you sign into it again.
 
-9.  Verify the device with SAS authentication. Initiate verification from another Matrix
+1.  Verify the device with SAS authentication. Initiate verification from another Matrix
     device. At the time of writing, this app cannot initiate verification. Follow the
     instructions on screen. It will show seven emojis and ask you to compare them with
     the ones shown on your other device.
@@ -429,7 +388,7 @@ a VS Code terminal which is attached to the container.
     Element Web generic Matrix client which can initiate verification and works from a
     web browser.
 
-10. View and send messages. The UI is made to work with mouse or keyboard navigation.
+1.  View and send messages. The UI is made to work with mouse or keyboard navigation.
     Use the arrow keys, the enter key, and the tab key to change focus.
 
     After verifying the device, it may take some time for trust in your device to
@@ -439,5 +398,5 @@ a VS Code terminal which is attached to the container.
     older than when this device account joined the network. You should carefully manage
     your hostfs appdata directory if you want to continue to view previous messages.
 
-11. If you close the window and the process doesn't stop, use `pkill nuttx`
+1.  If you close the window and the process doesn't stop, use `pkill nuttx`
     in a separate terminal.
